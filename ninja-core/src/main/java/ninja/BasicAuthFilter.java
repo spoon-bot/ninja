@@ -33,7 +33,7 @@ import com.google.inject.Inject;
  */
 public class BasicAuthFilter implements Filter {
 
-    protected final Ninja ninja;
+    protected final Ninja ninja2;
 
     protected final UsernamePasswordValidator credentialsValidator;
 
@@ -42,10 +42,10 @@ public class BasicAuthFilter implements Filter {
     protected final String realm;
 
     @Inject
-    public BasicAuthFilter(Ninja ninja,
+    public BasicAuthFilter(Ninja ninja2,
                            NinjaProperties ninjaProperties,
                            UsernamePasswordValidator validator) {
-        this.ninja = ninja;
+        this.ninja2 = ninja2;
         this.credentialsValidator = validator;
         this.realm = ninjaProperties.getWithDefault(
                 NinjaConstant.applicationName, "Ninja");
@@ -57,7 +57,7 @@ public class BasicAuthFilter implements Filter {
 
         if (context.getSession() == null) {
             // no session
-            return ninja.getUnauthorizedResult(context);
+            return ninja2.getUnauthorizedResult(context);
 
         } else if (context.getSession().get(SecureFilter.USERNAME) == null) {
             // no login, conditionally challenge
@@ -83,7 +83,7 @@ public class BasicAuthFilter implements Filter {
                 }
             }
 
-            Result result = ninja.getUnauthorizedResult(context).addHeader(
+            Result result = ninja2.getUnauthorizedResult(context).addHeader(
                     Result.WWW_AUTHENTICATE, challenge);
             return result;
 

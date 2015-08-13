@@ -20,30 +20,30 @@ import com.google.inject.Inject;
 
 /**
  * A simple default implementation of a SecureFilter.
- * 
+ *
  * If you annotate your methods using that filter it will check if a variable
  * called "username" is saved in the cookie.
- * 
+ *
  * If yes it will continue the execution. If not it will break.
- * 
- * 
+ *
+ *
  * NinjaFilter are really simple. If this one does not suit your needs modify it
  * for your project :)
- * 
- * 
+ *
+ *
  * @author rbauer
- * 
+ *
  */
 public class SecureFilter implements Filter {
 
     /** If a username is saved we assume the session is valid */
     public static final String USERNAME = "username";
-    
-    private final Ninja ninja;
-    
+
+    private final Ninja ninja2;
+
     @Inject
-    public SecureFilter(Ninja ninja) {
-        this.ninja = ninja;
+    public SecureFilter(Ninja ninja2) {
+        this.ninja2 = ninja2;
     }
 
     @Override
@@ -52,8 +52,8 @@ public class SecureFilter implements Filter {
         // if we got no cookies we break:
         if (context.getSession() == null
                 || context.getSession().get(USERNAME) == null) {
-            
-            Result result = ninja.getForbiddenResult(context);
+
+            Result result = ninja2.getForbiddenResult(context);
             return result;
 
         } else {
